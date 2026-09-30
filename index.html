@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividades de Materiales - Tecnología e Ingeniería</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --success: #059669;
+            --error: #DC2626;
+            --background: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --glass-border: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--background);
+            color: var(--text-main);
+            margin: 0;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #4F46E5, #9333EA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+        }
+
+        .activity-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .activity-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1rem;
+        }
+
+        .activity-number {
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 1rem;
+        }
+
+        .data-box {
+            background: rgba(79, 70, 229, 0.05);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .question {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+        }
+
+        .question p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        input[type="number"] {
+            background: #FFFFFF;
+            border: 1px solid #CBD5E1;
+            color: var(--text-main);
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.8rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            width: 150px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+
+        .unit {
+            color: #9333EA;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.8rem;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: var(--primary-hover);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn-help {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-help:hover {
+            background: rgba(79, 70, 229, 0.05);
+            color: var(--primary-hover);
+            box-shadow: none;
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            display: none;
+            font-weight: 500;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .feedback.success {
+            display: block;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .feedback.error {
+            display: block;
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .help-content {
+            display: none;
+            margin-top: 1rem;
+            padding: 1.2rem;
+            background: rgba(79, 70, 229, 0.05);
+            border-left: 3px solid #9333EA;
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            line-height: 1.5;
+            animation: slideDown 0.3s ease;
+        }
+
+        .help-content ul {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Propiedades Mecánicas</h1>
+    <div class="subtitle">Ensayo de Tracción y Ley de Hooke - 2º Bachillerato</div>
+
+    <!-- Actividad 1 -->
+    <div class="activity-card">
+        <div class="activity-header">
+            <div class="activity-number">1</div>
+            <h2>Aleación de Aluminio</h2>
+        </div>
+        
+        <div class="data-box">
+            <strong>Datos del material:</strong>
+            <ul style="margin-bottom: 0;">
+                <li>Módulo de elasticidad (E): 70 GPa</li>
+                <li>Límite elástico (&sigma;<sub>E</sub>): 200 MPa</li>
+                <li>Resistencia a la tracción: 310 MPa</li>
+            </ul>
+        </div>
+
+        <!-- Pregunta 1.1 -->
+        <div class="question">
+            <p><strong>A)</strong> Calcula la <strong>tensión</strong> que se genera en una barra de 500 mm de longitud si sufre un alargamiento de 0,5 mm (asume que está dentro de la zona proporcional elástica).</p>
+            <div class="input-group">
+                <input type="number" id="q1_1" step="0.01" placeholder="Ej: 50.5">
+                <span class="unit">MPa</span>
+                <button onclick="checkAnswer('q1_1', 70)">Comprobar</button>
+                <button class="btn-help" onclick="toggleHelp('help1_1')">Guía de Ayuda</button>
+            </div>
+            <div id="help1_1" class="help-content">
+                <strong>Pasos recomendados:</strong>
+                <ul>
+                    <li>1. Calcula la deformación unitaria (&epsilon;) dividiendo el alargamiento (&Delta;l) entre la longitud inicial (l<sub>0</sub>). ¡Ojo! Las unidades deben ser iguales.</li>
+                    <li>2. Aplica la Ley de Hooke: &sigma; = E · &epsilon;</li>
+                    <li>3. Ten cuidado con las unidades: si E está en GPa (10<sup>9</sup> Pa), pásalo a Pa. El resultado te dará en Pa, conviértelo a MPa (10<sup>6</sup> Pa) para introducirlo en la casilla.</li>
+                </ul>
+            </div>
+            <div id="fb_q1_1" class="feedback"></div>
+        </div>
+
+        <!-- Pregunta 1.2 -->
+        <div class="question">
+            <p><strong>B)</strong> Calcula el <strong>diámetro mínimo</strong> que debe tener una barra de este material para que, soportando una carga de tracción de 60 kN, no sufra deformaciones permanentes.</p>
+            <div class="input-group">
+                <input type="number" id="q1_2" step="0.01" placeholder="Ej: 15.20">
+                <span class="unit">mm</span>
+                <button onclick="checkAnswer('q1_2', 19.54, 0.1)">Comprobar</button>
+                <button class="btn-help" onclick="toggleHelp('help1_2')">Guía de Ayuda</button>
+            </div>
+            <div id="help1_2" class="help-content">
+                <strong>Pasos recomendados:</strong>
+                <ul>
+                    <li>1. Para no sufrir deformaciones permanentes, la tensión máxima de trabajo no debe superar el Límite Elástico (&sigma;<sub>E</sub>). Usa &sigma; = F / A.</li>
+                    <li>2. Despeja el área (A = F / &sigma;<sub>E</sub>). Asegúrate de pasar la Fuerza a Newtons (N) y la tensión a Pascales (Pa). El área te dará en m<sup>2</sup>.</li>
+                    <li>3. Recuerda que el área de una sección circular es A = &pi; · d<sup>2</sup> / 4. Despeja el diámetro (d) y pásalo a milímetros (mm).</li>
+                </ul>
+            </div>
+            <div id="fb_q1_2" class="feedback"></div>
+        </div>
+
+        <!-- Pregunta 1.3 -->
+        <div class="question" style="margin-bottom: 0;">
+            <p><strong>C)</strong> Vuelve a calcular el <strong>diámetro mínimo</strong> para la misma carga de 60 kN, pero aplicando un coeficiente de seguridad (n) de 4.</p>
+            <div class="input-group">
+                <input type="number" id="q1_3" step="0.01" placeholder="Ej: 30.50">
+                <span class="unit">mm</span>
+                <button onclick="checkAnswer('q1_3', 39.09, 0.1)">Comprobar</button>
+                <button class="btn-help" onclick="toggleHelp('help1_3')">Guía de Ayuda</button>
+            </div>
+            <div id="help1_3" class="help-content">
+                <strong>Pasos recomendados:</strong>
+                <ul>
+                    <li>1. Cuando hay coeficiente de seguridad, la tensión de trabajo permitida es: &sigma;<sub>trabajo</sub> = &sigma;<sub>E</sub> / n.</li>
+                    <li>2. Usa esta nueva tensión máxima permitida para despejar el área (A = F / &sigma;<sub>trabajo</sub>).</li>
+                    <li>3. Vuelve a despejar el diámetro en mm con la nueva área. ¡Será un diámetro mayor por seguridad!</li>
+                </ul>
+            </div>
+            <div id="fb_q1_3" class="feedback"></div>
+        </div>
+    </div>
+
+    <!-- Actividad 2 -->
+    <div class="activity-card">
+        <div class="activity-header">
+            <div class="activity-number">2</div>
+            <h2>Acero Estructural</h2>
+        </div>
+        
+        <div class="data-box">
+            <strong>Datos del material:</strong>
+            <ul style="margin-bottom: 0;">
+                <li>Módulo de elasticidad (E): 210 GPa</li>
+                <li>Límite elástico (&sigma;<sub>E</sub>): 250 MPa</li>
+            </ul>
+        </div>
+
+        <!-- Pregunta 2.1 -->
+        <div class="question">
+            <p><strong>A)</strong> Determina el <strong>alargamiento total</strong> de un pilar de 2 metros de longitud si se le aplica una tensión de trabajo de 105 MPa.</p>
+            <div class="input-group">
+                <input type="number" id="q2_1" step="0.01" placeholder="Ej: 2.5">
+                <span class="unit">mm</span>
+                <button onclick="checkAnswer('q2_1', 1.00)">Comprobar</button>
+                <button class="btn-help" onclick="toggleHelp('help2_1')">Guía de Ayuda</button>
+            </div>
+            <div id="help2_1" class="help-content">
+                <strong>Pasos recomendados:</strong>
+                <ul>
+                    <li>1. A partir de la tensión (&sigma;) y el Módulo de Young (E), usa la Ley de Hooke para calcular la deformación unitaria (&epsilon; = &sigma; / E).</li>
+                    <li>2. ¡Alinea las unidades! Puedes dejar &sigma; en MPa y E en MPa (210 GPa = 210,000 MPa) para que se anulen.</li>
+                    <li>3. Multiplica &epsilon; por la longitud inicial (l<sub>0</sub> en milímetros, 2m = 2000mm) para obtener el alargamiento en mm.</li>
+                </ul>
+            </div>
+            <div id="fb_q2_1" class="feedback"></div>
+        </div>
+
+        <!-- Pregunta 2.2 -->
+        <div class="question" style="margin-bottom: 0;">
+            <p><strong>B)</strong> Calcula la <strong>carga máxima</strong> que puede soportar un tirante cilíndrico de 10 mm de diámetro con este material, si el proyecto exige un coeficiente de seguridad de 2.</p>
+            <div class="input-group">
+                <input type="number" id="q2_2" step="0.01" placeholder="Ej: 5.5">
+                <span class="unit">kN</span>
+                <button onclick="checkAnswer('q2_2', 9.82, 0.1)">Comprobar</button>
+                <button class="btn-help" onclick="toggleHelp('help2_2')">Guía de Ayuda</button>
+            </div>
+            <div id="help2_2" class="help-content">
+                <strong>Pasos recomendados:</strong>
+                <ul>
+                    <li>1. Calcula primero la tensión de trabajo segura usando el coeficiente: &sigma;<sub>trabajo</sub> = &sigma;<sub>E</sub> / n.</li>
+                    <li>2. Calcula el área de la sección del tirante usando el diámetro (A = &pi; · d<sup>2</sup> / 4). Pásala a metros cuadrados (m<sup>2</sup>).</li>
+                    <li>3. Calcula la fuerza máxima (F = &sigma;<sub>trabajo</sub> · A). Asegúrate de trabajar la tensión en Pascales (Pa). El resultado te dará en Newtons (N).</li>
+                    <li>4. Divide entre 1000 para pasar la fuerza final a kiloNewtons (kN).</li>
+                </ul>
+            </div>
+            <div id="fb_q2_2" class="feedback"></div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    function toggleHelp(id) {
+        const el = document.getElementById(id);
+        if (el.style.display === 'block') {
+            el.style.display = 'none';
+        } else {
+            el.style.display = 'block';
+        }
+    }
+
+    function checkAnswer(inputId, correctAnswer, tolerance = 0.05) {
+        const inputEl = document.getElementById(inputId);
+        const fbEl = document.getElementById('fb_' + inputId);
+        const userAnswer = parseFloat(inputEl.value);
+
+        if (isNaN(userAnswer)) {
+            fbEl.className = 'feedback error';
+            fbEl.innerHTML = '⚠️ Por favor, introduce un valor numérico. Usa el punto como separador decimal si es necesario.';
+            return;
+        }
+
+        const diff = Math.abs(userAnswer - correctAnswer);
+        
+        // Comprobar si el resultado está dentro de la tolerancia permitida
+        if (diff <= tolerance) {
+            fbEl.className = 'feedback success';
+            fbEl.innerHTML = '✨ ¡Excelente! El resultado y las unidades son correctos.';
+        } else {
+            fbEl.className = 'feedback error';
+            
+            // Lógica para dar pistas sin dar la solución
+            let hint = '❌ El resultado no es correcto.';
+            if (userAnswer === correctAnswer * 10 || userAnswer === correctAnswer / 10 || userAnswer === correctAnswer * 1000 || userAnswer === correctAnswer / 1000) {
+                hint += ' Revisa bien las unidades (MPa vs Pa, mm vs m, kN vs N). Parece un error de conversión.';
+            } else if (diff < tolerance * 10) {
+                hint += ' Te has acercado mucho, pero no es exacto. Revisa los redondeos en los pasos intermedios, especialmente con Pi.';
+            } else {
+                hint += ' Te recomendamos abrir la "Guía de Ayuda" y seguir los pasos uno a uno prestando atención a los despejes.';
+            }
+            
+            fbEl.innerHTML = hint;
+        }
+    }
+</script>
+
+</body>
+</html>
